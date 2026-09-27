@@ -1,22 +1,47 @@
-<section class="news-section">
-  <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">Catálogo General de Noticias</h1>
-  <p style="color: var(--text-muted); margin-bottom: 2rem;">Explora todas las historias disponibles en la plataforma.</p>
+<section style="padding: 1rem 0;">
+  <small style="color: var(--text-muted); font-size: 0.85rem; font-weight: 600;">Inicio / Actualidad</small>
+  <h1 style="font-size: 2.8rem; font-weight: 800; margin: 0.4rem 0;">Catálogo de Noticias</h1>
+  <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 2rem;">
+    Explora todas nuestras historias verificadas, filtradas por categoría y tema de interés.
+  </p>
 
+  <!-- Filtros de Categorías -->
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
+    <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+      <button *ngFor="let cat of categorias" 
+              (click)="filtrarPorCategoria(cat)"
+              [style.background]="categoriaSeleccionada === cat ? 'var(--primary-blue)' : '#e2e8f0'"
+              [style.color]="categoriaSeleccionada === cat ? 'white' : 'var(--text-dark)'"
+              style="border: none; padding: 0.5rem 1.2rem; border-radius: var(--radius-pill); font-weight: 700; cursor: pointer; font-size: 0.88rem;">
+        {{ cat }}
+      </button>
+    </div>
+    <span style="color: var(--text-muted); font-size: 0.88rem; font-weight: 600;">Ordenar por: <strong>Más recientes</strong></span>
+  </div>
+
+  <!-- Cards Grid -->
   <div class="cards-grid">
-    <article class="card" *ngFor="let noticia of noticias">
-      <img [src]="noticia.imagen" [alt]="noticia.titulo">
+    <article class="card" *ngFor="let item of noticiasFiltradas">
+      <img [src]="item.imagen" [alt]="item.titulo">
       <div class="card-body">
         <div class="card-meta">
-          <span>{{ noticia.categoria }}</span>
-          <span>{{ noticia.tiempoLectura }}</span>
+          <span>{{ item.categoria }}</span>
+          <span>{{ item.tiempoLectura }}</span>
         </div>
-        <h3 class="card-title">{{ noticia.titulo }}</h3>
-        <p class="card-excerpt">{{ noticia.resumen }}</p>
+        <h3 class="card-title">{{ item.titulo }}</h3>
+        <p class="card-excerpt">{{ item.resumen }}</p>
         <div class="card-footer">
-          <a [routerLink]="['/detalle', noticia.id]" style="color: var(--primary-blue); text-decoration: none; font-weight: bold;">Ver noticia &rarr;</a>
-          <button class="btn-fav" (click)="agregarAFavoritos(noticia.id)">🔖</button>
+          <a [routerLink]="['/detalle', item.id]" style="color: var(--primary-blue); text-decoration: none; font-weight: 700; font-size: 0.9rem;">
+            Ver noticia &rarr;
+          </a>
+          <button class="btn-bookmark" (click)="agregarAFavoritos(item.id)">🔖</button>
         </div>
       </div>
     </article>
+  </div>
+
+  <!-- Botón Cargar Más -->
+  <div style="text-align: center; margin-top: 3rem;">
+    <button class="btn-light-gray" style="padding: 0.8rem 2rem;">Cargar más historias +</button>
   </div>
 </section>

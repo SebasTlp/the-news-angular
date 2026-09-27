@@ -26,12 +26,12 @@ export class NoticiasService {
   }
 
   getFavoritosIds(): number[] {
-    const data: string | null = localStorage.getItem(this.favKey);
-    return data ? JSON.parse(data) : [];
+    const data = localStorage.getItem(this.favKey);
+    return data ? JSON.parse(data) : [1, 2, 3]; // Inicializa con IDs por defecto para visualización
   }
 
   guardarFavorito(id: number): boolean {
-    const favs: number[] = this.getFavoritosIds();
+    const favs = this.getFavoritosIds();
     if (!favs.includes(id)) {
       favs.push(id);
       localStorage.setItem(this.favKey, JSON.stringify(favs));

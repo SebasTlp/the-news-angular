@@ -13,6 +13,8 @@ import { NoticiasService, Noticia } from '../../services/noticias';
 export class NoticiasComponent implements OnInit {
   private noticiasService: NoticiasService = inject(NoticiasService);
   noticias: Noticia[] = [];
+  categoriaSeleccionada: string = 'Todas';
+  categorias: string[] = ['Todas', 'Ciudad', 'Innovación', 'Cultura', 'Bienestar', 'Medio Ambiente'];
 
   ngOnInit(): void {
     this.noticiasService.getNoticias().subscribe((data: Noticia[]) => {
@@ -20,12 +22,19 @@ export class NoticiasComponent implements OnInit {
     });
   }
 
-  agregarAFavoritos(id: number): void {
-    const agregado: boolean = this.noticiasService.guardarFavorito(id);
-    if (agregado) {
-      alert('¡Noticia guardada en Favoritos!');
-    } else {
-      alert('Esta noticia ya está en tus favoritos.');
+  filtrarPorCategoria(cat: string): void {
+    this.categoriaSeleccionada = cat;
+  }
+
+  get noticiasFiltradas(): Noticia[] {
+    if (this.categoriaSeleccionada === 'Todas') {
+      return this.noticias;
     }
+    return this.noticias.filter(n => n.categoria.toLowerCase() === this.categoriaSeleccionada.toLowerCase());
+  }
+
+  agregarAFavoritos(id: number): void {
+    const agregado = this.noticiasService.guardarFavorito(id);
+    alert(agregado ? '¡Noticia guardada en Favoritos!' : 'Esta noticia ya está en tus favoritos.');
   }
 }

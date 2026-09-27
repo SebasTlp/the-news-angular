@@ -1,32 +1,41 @@
-<section style="padding: 3rem 5%;">
+<section style="padding: 1rem 0;">
+  <small style="color: var(--accent-coral); font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;">TU COLECCIÓN</small>
+  <h1 style="font-size: 2.8rem; font-weight: 800; margin: 0.4rem 0;">Noticias para volver con calma</h1>
+  <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 1.5rem;">
+    Guardamos tus lecturas favoritas en este dispositivo. Organiza tu tiempo y retómalas cuando quieras.
+  </p>
+
   <div style="margin-bottom: 2rem;">
-    <small style="color: var(--accent-coral); font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;">TU COLECCIÓN</small>
-    <h1 style="font-size: 2.5rem; font-weight: 800;">Noticias Guardadas</h1>
+    <span style="background-color: #e0f2fe; color: #0369a1; padding: 6px 14px; border-radius: var(--radius-pill); font-weight: 800; font-size: 0.85rem;">
+      {{ favoritos.length }} guardadas
+    </span>
   </div>
 
-  <div *ngIf="favoritos.length === 0" style="text-align: center; padding: 5rem 2rem; background: white; border-radius: var(--radius-lg); border: 1px dashed var(--border-color);">
-    <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 1.5rem;">Aún no has guardado ninguna noticia en tus favoritos.</p>
-    <a routerLink="/noticias" class="btn-pill-primary">Explorar el catálogo &rarr;</a>
-  </div>
-
-  <div class="cards-grid" *ngIf="favoritos.length > 0">
-    <article class="card" *ngFor="let noticia of favoritos">
-      <div class="card-img-wrapper">
-        <img [src]="noticia.imagen" [alt]="noticia.titulo">
-      </div>
+  <div class="cards-grid">
+    <article class="card" *ngFor="let item of favoritos">
       <div class="card-body">
         <div class="card-meta">
-          <span>{{ noticia.categoria }}</span>
-          <span>{{ noticia.tiempoLectura }}</span>
+          <span>{{ item.categoria }}</span>
+          <span>{{ item.tiempoLectura }}</span>
         </div>
-        <h3 class="card-title">{{ noticia.titulo }}</h3>
-        <p class="card-excerpt">{{ noticia.resumen }}</p>
+        <h3 class="card-title">{{ item.titulo }}</h3>
+        <p class="card-excerpt">{{ item.resumen }}</p>
         <div class="card-footer">
-          <a [routerLink]="['/detalle', noticia.id]" style="color: var(--primary-blue); text-decoration: none; font-weight: 700; font-size: 0.95rem;">
-            Leer completa &rarr;
+          <a [routerLink]="['/detalle', item.id]" style="color: var(--primary-blue); text-decoration: none; font-weight: 700; font-size: 0.9rem;">
+            Ver noticia &rarr;
           </a>
+          <button class="btn-bookmark">🔖</button>
         </div>
       </div>
     </article>
+  </div>
+
+  <!-- Banner ¿Buscas algo nuevo? -->
+  <div style="margin-top: 4rem; background: white; padding: 3rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-sm);">
+    <div>
+      <h3 style="font-size: 1.8rem; font-weight: 800;">¿Buscas algo nuevo?</h3>
+      <p style="color: var(--text-muted); font-size: 1rem; margin-top: 4px;">Explora la edición de hoy y guarda las historias que te importan.</p>
+    </div>
+    <a routerLink="/noticias" class="btn-blue">Explorar noticias &rarr;</a>
   </div>
 </section>
