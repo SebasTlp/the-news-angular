@@ -17,6 +17,10 @@ export class NoticiasComponent implements OnInit {
   categorias: string[] = ['Todas', 'Ciudad', 'Innovación', 'Cultura', 'Bienestar', 'Medio Ambiente'];
 
   ngOnInit(): void {
+    this.cargarNoticias();
+  }
+
+  cargarNoticias(): void {
     this.noticiasService.getNoticias().subscribe((data: Noticia[]) => {
       this.noticias = data;
     });
@@ -27,14 +31,20 @@ export class NoticiasComponent implements OnInit {
   }
 
   get noticiasFiltradas(): Noticia[] {
-    if (this.categoriaSeleccionada === 'Todas') {
+    if (!this.categoriaSeleccionada || this.categoriaSeleccionada === 'Todas') {
       return this.noticias;
     }
-    return this.noticias.filter(n => n.categoria.toLowerCase() === this.categoriaSeleccionada.toLowerCase());
+    return this.noticias.filter(n => 
+      n.categoria.trim().toLowerCase() === this.categoriaSeleccionada.trim().toLowerCase()
+    );
   }
 
-  agregarAFavoritos(id: number): void {
-    const agregado = this.noticiasService.guardarFavorito(id);
-    alert(agregado ? '¡Noticia guardada en Favoritos!' : 'Esta noticia ya está en tus favoritos.');
+  toggleFavorito(id: number): void {
+    const agregado = this.noticiasService.toggleFavorito(id);
+    alert(agregado ? '¡Noticia agregada a tus Favoritos!' : 'Noticia eliminada de tus Favoritos.');
+  }
+
+  esFavorito(id: number): boolean {
+    return this.noticiasService.esFavorito(id);
   }
 }

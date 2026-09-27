@@ -19,7 +19,7 @@ export interface Noticia {
 export class NoticiasService {
   private http: HttpClient = inject(HttpClient);
   private jsonUrl: string = 'data/noticias.json';
-  private favKey: string = 'favoritos_news';
+  private favKey: string = 'favoritos_news_ids_v2';
 
   getNoticias(): Observable<Noticia[]> {
     return this.http.get<Noticia[]>(this.jsonUrl);
@@ -27,16 +27,37 @@ export class NoticiasService {
 
   getFavoritosIds(): number[] {
     const data = localStorage.getItem(this.favKey);
-    return data ? JSON.parse(data) : [1, 2, 3]; // Inicializa con IDs por defecto para visualización
+    if (!data) {
+      // Inicializar con las noticias 1 y 2 por defecto
+      const iniciales = [1, 2];
+      localStorage.setItem(this.favKey, JSON.stringify(iniciales));
+      return iniciales;
+    }
+    try {
+      return JSON.parse(data).map((id: any) => Number(id));
+    } catch {
+      return [1, 2];
+    }
   }
 
-  guardarFavorito(id: number): boolean {
-    const favs = this.getFavoritosIds();
-    if (!favs.includes(id)) {
-      favs.push(id);
-      localStorage.setItem(this.favKey, JSON.stringify(favs));
-      return true;
+  toggleFavorito(id: number): boolean {
+    const idNum = Number(id);
+    let favs = this.getFavoritosIds();
+    const index = favs.indexOf(idNum);
+    let agregado = false;
+
+    if (index > -1) {
+      favs.splice(index, 1);
+    } else {
+      favs.push(idNum);
+      agregado = true;
     }
-    return false;
+
+    localStorage.setItem(this.favKey, JSON.stringify(favs));
+    return agregado;
+  }
+
+  esFavorito(id: number): boolean {
+    return this.getFavoritosIds().includes(Number(id));
   }
 }

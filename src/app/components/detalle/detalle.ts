@@ -27,8 +27,12 @@ export class DetalleComponent implements OnInit {
 
   guardarFavorito(): void {
     if (this.noticia) {
-      const agregado = this.noticiasService.guardarFavorito(this.noticia.id);
-      alert(agregado ? '¡Noticia guardada en favoritos!' : 'Esta noticia ya estaba guardada.');
+      const esFavorito = this.noticiasService.toggleFavorito(this.noticia.id);
+      alert(esFavorito ? '¡Noticia guardada en favoritos!' : 'Noticia eliminada de favoritos.');
     }
+  }
+
+  esFavorito(): boolean {
+    return this.noticia ? this.noticiasService.esFavorito(this.noticia.id) : false;
   }
 }

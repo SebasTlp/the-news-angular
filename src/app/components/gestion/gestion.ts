@@ -57,9 +57,9 @@ export class GestionComponent implements OnInit {
       titulo: 'Nueva publicación editorial de prueba',
       categoria: 'Ciudad',
       tiempoLectura: '3 min',
-      resumen: 'Resumen rápido de la nueva historia añadida desde la mesa de trabajo.',
-      contenido: 'Contenido redactado desde el panel de administración.',
-      imagen: 'https://images.unsplash.com/photo-1509391365360-2e959784a276?q=80&w=800&auto=format&fit=crop',
+      resumen: 'Resumen rápido de la nueva historia añadida desde el panel de administración.',
+      contenido: 'Contenido redactado directamente desde la mesa de trabajo.',
+      imagen: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&auto=format&fit=crop&q=80',
       destacada: false
     };
     this.noticias.unshift(nueva);

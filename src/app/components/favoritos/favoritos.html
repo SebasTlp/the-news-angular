@@ -11,8 +11,10 @@
     </span>
   </div>
 
-  <div class="cards-grid">
-    <article class="card" *ngFor="let item of favoritos">
+  <!-- Cards Grid de Favoritos -->
+  <div class="cards-grid" *ngIf="favoritos.length > 0">
+    <article class="card" *ngFor="let item of favoritos; let i = index">
+      <img [src]="item.imagen" [alt]="item.titulo" style="width: 100%; height: 200px; object-fit: cover;">
       <div class="card-body">
         <div class="card-meta">
           <span>{{ item.categoria }}</span>
@@ -24,17 +26,19 @@
           <a [routerLink]="['/detalle', item.id]" style="color: var(--primary-blue); text-decoration: none; font-weight: 700; font-size: 0.9rem;">
             Ver noticia &rarr;
           </a>
-          <button class="btn-bookmark">🔖</button>
+          <button class="btn-bookmark" (click)="quitarFavorito(i)" title="Quitar de Favoritos">
+            🔖
+          </button>
         </div>
       </div>
     </article>
   </div>
 
-  <!-- Banner ¿Buscas algo nuevo? -->
-  <div style="margin-top: 4rem; background: white; padding: 3rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-sm);">
+  <!-- Banner Informativo -->
+  <div style="margin-top: 4rem; background: white; padding: 2.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-sm);">
     <div>
-      <h3 style="font-size: 1.8rem; font-weight: 800;">¿Buscas algo nuevo?</h3>
-      <p style="color: var(--text-muted); font-size: 1rem; margin-top: 4px;">Explora la edición de hoy y guarda las historias que te importan.</p>
+      <h3 style="font-size: 1.6rem; font-weight: 800; margin: 0;">¿Buscas algo nuevo?</h3>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 4px;">Explora la edición de hoy y guarda las historias que te importan.</p>
     </div>
     <a routerLink="/noticias" class="btn-blue">Explorar noticias &rarr;</a>
   </div>

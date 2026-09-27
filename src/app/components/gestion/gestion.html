@@ -1,1 +1,87 @@
-<p>gestion works!</p>
+<section style="padding: 1rem 0;">
+  
+  <!-- Header de la Pestaña -->
+  <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem;">
+    <div>
+      <small style="color: var(--text-muted); font-size: 0.85rem; font-weight: 600;">Administración / Editorial</small>
+      <h1 style="font-size: 2.5rem; font-weight: 800; color: var(--text-dark); margin: 0.3rem 0 0;">Gestión de Noticias</h1>
+    </div>
+    <button class="btn-blue" (click)="crearNoticiaDemo()" style="padding: 0.75rem 1.4rem; font-size: 0.9rem;">
+      + Crear nueva noticia
+    </button>
+  </div>
+
+  <!-- Métricas KPI integradas -->
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2.5rem;">
+    <div style="background: white; padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
+      <span style="color: var(--text-muted); font-size: 0.85rem; font-weight: 600;">Noticias Publicadas</span>
+      <h2 style="font-size: 2.2rem; font-weight: 800; margin: 0.2rem 0; color: var(--text-dark);">24</h2>
+      <span style="color: #16a34a; font-size: 0.8rem; font-weight: 700;">+3 este mes</span>
+    </div>
+
+    <div style="background: white; padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
+      <span style="color: var(--text-muted); font-size: 0.85rem; font-weight: 600;">Borradores Pendientes</span>
+      <h2 style="font-size: 2.2rem; font-weight: 800; margin: 0.2rem 0; color: var(--text-dark);">6</h2>
+      <span style="color: #ca8a04; font-size: 0.8rem; font-weight: 700;">2 por revisar</span>
+    </div>
+
+    <div style="background: white; padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
+      <span style="color: var(--text-muted); font-size: 0.85rem; font-weight: 600;">Lectores Guardados</span>
+      <h2 style="font-size: 2.2rem; font-weight: 800; margin: 0.2rem 0; color: var(--text-dark);">1.284</h2>
+      <span style="color: #16a34a; font-size: 0.8rem; font-weight: 700;">+18% este mes</span>
+    </div>
+  </div>
+
+  <!-- Tabla Estilizada de Noticias -->
+  <div style="background: white; border-radius: var(--radius-lg); border: 1px solid var(--border-color); padding: 1.8rem; box-shadow: var(--shadow-sm);">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+      <h3 style="font-size: 1.2rem; font-weight: 800; margin: 0; color: var(--text-dark);">Catálogo Editorial Completo</h3>
+      <input type="text" [(ngModel)]="filtroTexto" placeholder="🔍 Buscar por título..." style="padding: 0.6rem 1.2rem; border-radius: var(--radius-pill); border: 1px solid var(--border-color); width: 260px; font-size: 0.88rem; outline: none; background: #faf8f5;">
+    </div>
+
+    <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+      <thead>
+        <tr style="border-bottom: 2px solid var(--border-color); text-align: left; color: var(--text-muted); font-size: 0.78rem; font-weight: 800; letter-spacing: 0.5px;">
+          <th style="padding: 0.8rem 0;">NOTICIA</th>
+          <th style="padding: 0.8rem 0;">CATEGORÍA</th>
+          <th style="padding: 0.8rem 0;">ESTADO</th>
+          <th style="padding: 0.8rem 0;">FECHA</th>
+          <th style="padding: 0.8rem 0; text-align: right;">ACCIONES</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of noticiasFiltradas" style="border-bottom: 1px solid #f1f5f9;">
+          <td style="padding: 1rem 0; font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 12px;">
+            <img [src]="item.imagen" style="width: 44px; height: 44px; border-radius: 10px; object-fit: cover; background: #e2e8f0;">
+            <span>{{ item.titulo }}</span>
+          </td>
+          <td style="padding: 1rem 0; color: var(--text-muted); font-weight: 600;">{{ item.categoria }}</td>
+          <td style="padding: 1rem 0;">
+            <span [style.background-color]="item.destacada ? '#dcfce7' : '#fef9c3'" [style.color]="item.destacada ? '#15803d' : '#a16207'" style="padding: 4px 12px; border-radius: 8px; font-weight: 800; font-size: 0.75rem;">
+              {{ item.destacada ? 'Publicado' : 'Borrador' }}
+            </span>
+          </td>
+          <td style="padding: 1rem 0; color: var(--text-muted); font-size: 0.85rem;">08 sep 2026</td>
+          <td style="padding: 1rem 0; text-align: right;">
+            <button style="background: #f1f5f9; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; margin-right: 6px; font-weight: 700; font-size: 0.85rem;">✏️ Editar</button>
+            <button style="background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 0.85rem;" (click)="prepararEliminar(item)">🗑️ Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Alerta de Eliminación -->
+  <div *ngIf="noticiaAEliminar" style="margin-top: 1.5rem; background: #fef2f2; border: 1px solid #fecaca; padding: 1.2rem 1.8rem; border-radius: var(--radius-lg); display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <strong style="color: #dc2626; font-size: 1rem; display: block;">¿Eliminar esta noticia del sistema?</strong>
+      <span style="color: #991b1b; font-size: 0.88rem;">"{{ noticiaAEliminar.titulo }}"</span>
+    </div>
+    <div style="display: flex; gap: 10px;">
+      <button class="btn-light-gray" (click)="cancelarEliminar()">Cancelar</button>
+      <button style="background: #dc2626; color: white; border: none; padding: 0.6rem 1.4rem; border-radius: var(--radius-pill); font-weight: 700; cursor: pointer;" (click)="confirmarEliminar()">Sí, eliminar</button>
+    </div>
+  </div>
+
+</section>

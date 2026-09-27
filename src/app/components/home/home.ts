@@ -16,16 +16,16 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.noticiasService.getNoticias().subscribe((data: Noticia[]) => {
-      this.noticiasDestacadas = data.filter((n: Noticia) => n.destacada);
+      this.noticiasDestacadas = data.slice(0, 3);
     });
   }
 
   agregarAFavoritos(id: number): void {
-    const agregado: boolean = this.noticiasService.guardarFavorito(id);
-    if (agregado) {
-      alert('¡Noticia guardada en Favoritos!');
-    } else {
-      alert('Esta noticia ya está en tu colección.');
-    }
+    const esFavorito = this.noticiasService.toggleFavorito(id);
+    alert(esFavorito ? '¡Noticia guardada en favoritos!' : 'Noticia eliminada de favoritos.');
+  }
+
+  esFavorito(id: number): boolean {
+    return this.noticiasService.esFavorito(id);
   }
 }

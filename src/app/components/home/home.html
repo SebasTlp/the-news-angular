@@ -1,17 +1,17 @@
-<!-- Hero Principal (Pagina 1 Header) -->
-<section style="display: grid; grid-template-columns: 1fr 1.1fr; gap: 3rem; padding: 2rem 4rem; align-items: center;">
+<!-- Hero Principal -->
+<section style="display: grid; grid-template-columns: 1fr 1.1fr; gap: 3rem; padding: 1rem 0; align-items: center;">
   <div>
     <span style="background-color: var(--badge-green-bg); color: var(--badge-green-text); padding: 5px 14px; border-radius: 12px; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.5px;">EDICIÓN DE HOY · 8 SEP</span>
     <h1 style="font-size: 3.2rem; line-height: 1.1; margin: 1.2rem 0; font-weight: 800; color: var(--text-dark);">Historias para entender tu mundo, sin tanto ruido.</h1>
-    <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 1.1rem; max-width: 90%;">Noticias verificadas, contexto útil y voces cercanas. Una pausa informada en medio de un día acelerado.</p>
+    <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 1.1rem;">Noticias verificadas, contexto útil y voces cercanas. Una pausa informada en medio de un día acelerado.</p>
     <div style="display: flex; gap: 1rem;">
       <a routerLink="/noticias" class="btn-blue">Explorar noticias &rarr;</a>
-      <a href="#compromiso" class="btn-light-gray">Conocer el proyecto &rarr;</a>
+      <a routerLink="/contacto" class="btn-light-gray">Conocer el proyecto &rarr;</a>
     </div>
   </div>
 
   <!-- Tarjeta "Historia del Día" -->
-  <div style="position: relative; border-radius: 24px; overflow: hidden; height: 420px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
+  <div style="position: relative; border-radius: 24px; overflow: hidden; height: 420px; box-shadow: var(--shadow-md);">
     <img src="https://images.unsplash.com/photo-1519331379826-f10be5486c6f?q=80&w=800&auto=format&fit=crop" alt="El río vuelve a ser parte de la ciudad" style="width: 100%; height: 100%; object-fit: cover;">
     <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 2.5rem; background: linear-gradient(transparent, rgba(15,33,55,0.95)); color: white;">
       <span style="background-color: var(--accent-coral); color: white; padding: 4px 10px; border-radius: 8px; font-size: 0.7rem; font-weight: 800;">HISTORIA DEL DÍA</span>
@@ -23,7 +23,7 @@
 </section>
 
 <!-- Noticias Destacadas -->
-<section class="news-section">
+<section style="padding: 2.5rem 0;">
   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
     <div>
       <small style="color: var(--accent-coral); font-weight: 800; font-size: 0.75rem; letter-spacing: 0.5px;">PARA LEER HOY</small>
@@ -34,7 +34,7 @@
 
   <div class="cards-grid">
     <article class="card" *ngFor="let noticia of noticiasDestacadas">
-      <img [src]="noticia.imagen" [alt]="noticia.titulo">
+      <img [src]="noticia.imagen" [alt]="noticia.titulo" style="width: 100%; height: 200px; object-fit: cover;">
       <div class="card-body">
         <div class="card-meta">
           <span>{{ noticia.categoria }}</span>
@@ -43,51 +43,12 @@
         <h3 class="card-title">{{ noticia.titulo }}</h3>
         <p class="card-excerpt">{{ noticia.resumen }}</p>
         <div class="card-footer">
-          <a [routerLink]="['/noticias']" style="color: var(--primary-blue); text-decoration: none; font-weight: 700; font-size: 0.9rem;">Ver noticia &rarr;</a>
-          <button class="btn-bookmark" (click)="agregarAFavoritos(noticia.id)">🔖</button>
+          <a [routerLink]="['/detalle', noticia.id]" style="color: var(--primary-blue); text-decoration: none; font-weight: 700; font-size: 0.9rem;">Ver noticia &rarr;</a>
+          <button class="btn-bookmark" (click)="agregarAFavoritos(noticia.id)">
+            {{ esFavorito(noticia.id) ? '🔖' : '📑' }}
+          </button>
         </div>
       </div>
     </article>
   </div>
-</section>
-
-<!-- Bloque "Nuestro Compromiso" -->
-<section id="compromiso" style="background-color: var(--bg-light-blue); padding: 4rem; margin: 2rem 4rem; border-radius: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;">
-  <div>
-    <small style="color: var(--primary-blue); font-weight: 800; font-size: 0.8rem;">NUESTRO COMPROMISO</small>
-    <h2 style="font-size: 2.5rem; font-weight: 800; margin: 0.8rem 0; line-height: 1.2;">Menos titulares que gritan. Más historias que explican.</h2>
-    <p style="color: var(--text-muted); font-size: 1.05rem;">Investigamos con rigor, escribimos con claridad y escuchamos a quienes viven cada historia.</p>
-  </div>
-  <div style="display: flex; flex-direction: column; gap: 1rem;">
-    <div style="background: white; padding: 1.2rem 1.5rem; border-radius: 16px; display: flex; gap: 1rem; align-items: center;">
-      <span style="color: var(--accent-coral); font-weight: 800; font-size: 1.2rem;">01</span>
-      <div>
-        <strong style="display: block;">Verificado</strong>
-        <small style="color: var(--text-muted);">Contrastamos fuentes y datos.</small>
-      </div>
-    </div>
-    <div style="background: white; padding: 1.2rem 1.5rem; border-radius: 16px; display: flex; gap: 1rem; align-items: center;">
-      <span style="color: var(--accent-coral); font-weight: 800; font-size: 1.2rem;">02</span>
-      <div>
-        <strong style="display: block;">Cercano</strong>
-        <small style="color: var(--text-muted);">Contamos el impacto en tu vida.</small>
-      </div>
-    </div>
-    <div style="background: white; padding: 1.2rem 1.5rem; border-radius: 16px; display: flex; gap: 1rem; align-items: center;">
-      <span style="color: var(--accent-coral); font-weight: 800; font-size: 1.2rem;">03</span>
-      <div>
-        <strong style="display: block;">Independiente</strong>
-        <small style="color: var(--text-muted);">La audiencia es nuestra prioridad.</small>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Banner Final Call-to-Action Coral -->
-<section style="background-color: var(--accent-coral); color: white; padding: 3rem 4rem; margin: 0 4rem; border-radius: 24px; display: flex; justify-content: space-between; align-items: center;">
-  <div>
-    <h2 style="font-size: 2.2rem; font-weight: 800;">Tu próxima historia empieza aquí.</h2>
-    <p style="font-size: 1.05rem; opacity: 0.9; margin-top: 4px;">Explora, guarda tus favoritas y vuelve cuando quieras.</p>
-  </div>
-  <a routerLink="/noticias" style="background: white; color: var(--text-dark); padding: 0.85rem 1.8rem; border-radius: 30px; text-decoration: none; font-weight: 700;">Ver todas las noticias &rarr;</a>
 </section>
