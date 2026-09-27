@@ -1,0 +1,21 @@
+<header>
+  <div class="header-container">
+    <a routerLink="/" class="logo-container">
+      <div class="logo-icon">N</div>
+      <span>The News</span>
+    </a>
+    <nav>
+      <ul>
+        <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Inicio</a></li>
+        <li><a routerLink="/noticias" routerLinkActive="active">Actualidad</a></li>
+        <li><a routerLink="/gestion" routerLinkActive="active">Gestión</a></li>
+        <li><a routerLink="/favoritos" routerLinkActive="active">Favoritos</a></li>
+        <li><a routerLink="/contacto" routerLinkActive="active">Contacto</a></li>
+      </ul>
+    </nav>
+    <div class="search-wrapper">
+      <span class="search-icon">🔍</span>
+      <input type="text" class="search-input" placeholder="Buscar noticias...">
+    </div>
+  </div>
+</header>

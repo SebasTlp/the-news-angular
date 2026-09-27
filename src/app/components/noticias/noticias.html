@@ -1,0 +1,22 @@
+<section class="news-section">
+  <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">Catálogo General de Noticias</h1>
+  <p style="color: var(--text-muted); margin-bottom: 2rem;">Explora todas las historias disponibles en la plataforma.</p>
+
+  <div class="cards-grid">
+    <article class="card" *ngFor="let noticia of noticias">
+      <img [src]="noticia.imagen" [alt]="noticia.titulo">
+      <div class="card-body">
+        <div class="card-meta">
+          <span>{{ noticia.categoria }}</span>
+          <span>{{ noticia.tiempoLectura }}</span>
+        </div>
+        <h3 class="card-title">{{ noticia.titulo }}</h3>
+        <p class="card-excerpt">{{ noticia.resumen }}</p>
+        <div class="card-footer">
+          <a [routerLink]="['/detalle', noticia.id]" style="color: var(--primary-blue); text-decoration: none; font-weight: bold;">Ver noticia &rarr;</a>
+          <button class="btn-fav" (click)="agregarAFavoritos(noticia.id)">🔖</button>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
