@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "titulo": "La nueva red de parques que conectará cinco barrios",
+    "categoria": "Ciudad",
+    "tiempoLectura": "6 min",
+    "resumen": "Un corredor verde recuperará 18 hectáreas y sumará rutas seguras para caminar y pedalear.",
+    "contenido": "A primera hora, el lote todavía parece una frontera: una franja de tierra entre viviendas, una avenida y el canal. En pocos meses será el inicio de un corredor peatonal que conectará escuelas, comercios y estaciones de transporte.",
+    "imagen": "https://picsum.photos/id/1015/800/500",
+    "destacada": true
+  },
+  {
+    "id": 2,
+    "titulo": "La energía solar llega a los mercados de barrio",
+    "categoria": "Innovación",
+    "tiempoLectura": "6 min",
+    "resumen": "Comerciantes reducen costos mientras modernizan la cadena de frío de sus negocios.",
+    "contenido": "Paneles solares instalados en las cubiertas de los mercados de abastos permiten mantener la refrigeración constante reduciendo costos.",
+    "imagen": "https://picsum.photos/id/1060/800/500",
+    "destacada": true
+  },
+  {
+    "id": 3,
+    "titulo": "Las bibliotecas nocturnas abren una nueva conversación",
+    "categoria": "Cultura",
+    "tiempoLectura": "5 min",
+    "resumen": "Lecturas, música y talleres extienden la vida cultural de la ciudad hasta medianoche.",
+    "contenido": "El programa de extensión horaria ha transformado tres redes de bibliotecas públicas en puntos de encuentro comunitario.",
+    "imagen": "https://picsum.photos/id/1070/800/500",
+    "destacada": true
+  },
+  {
+    "id": 4,
+    "titulo": "El río vuelve a ser parte de la vida cotidiana",
+    "categoria": "Medio Ambiente",
+    "tiempoLectura": "7 min",
+    "resumen": "La recuperación de sus orillas transforma la movilidad y reúne a tres comunidades.",
+    "contenido": "Proyectos de bioingeniería e ingeniería ambiental logran mitigar la contaminación en las riberas del cauce principal.",
+    "imagen": "https://picsum.photos/id/1043/800/500",
+    "destacada": false
+  },
+  {
+    "id": 5,
+    "titulo": "Calles tranquilas para volver a caminar el barrio",
+    "categoria": "Ciudad",
+    "tiempoLectura": "5 min",
+    "resumen": "Nuevas rutas peatonales acercan escuelas, comercios y estaciones de transporte público.",
+    "contenido": "La pacificación del tráfico rodado en zonas residenciales impulsa el comercio local y garantiza desplazamientos escolares.",
+    "imagen": "https://picsum.photos/id/1076/800/500",
+    "destacada": false
+  },
+  {
+    "id": 6,
+    "titulo": "Cocinas comunitarias que también cuidan la salud",
+    "categoria": "Bienestar",
+    "tiempoLectura": "4 min",
+    "resumen": "Una red vecinal combina alimentación, escucha y prevención para acompañar a las familias.",
+    "contenido": "Talleres de nutrición consciente y comedores solidarios generan espacios de cuidado mutuo e integración.",
+    "imagen": "https://picsum.photos/id/1080/800/500",
+    "destacada": false
+  }
+]
