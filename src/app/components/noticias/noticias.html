@@ -1,12 +1,12 @@
-<section style="padding: 1rem 0;">
+<section style="padding: 1rem 0; position: relative;">
   <small style="color: var(--text-muted); font-size: 0.85rem; font-weight: 600;">Inicio / Actualidad</small>
   <h1 style="font-size: 2.8rem; font-weight: 800; margin: 0.4rem 0;">Catálogo de Noticias</h1>
   <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 2rem;">
     Explora todas nuestras historias verificadas, filtradas por categoría y tema de interés.
   </p>
 
-  <!-- Filtros -->
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
+  <!-- Barra de Filtros con Badge interactivo para eliminar -->
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
     <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
       <button *ngFor="let cat of categorias" 
               (click)="filtrarPorCategoria(cat)"
@@ -16,13 +16,36 @@
         {{ cat }}
       </button>
     </div>
-    <span style="color: var(--text-muted); font-size: 0.88rem; font-weight: 600;">Ordenar por: <strong>Más recientes</strong></span>
+
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <!-- Badge de filtro activo eliminable -->
+      <span *ngIf="terminoBusqueda" 
+            style="background: #e0f2fe; color: #0369a1; padding: 0.4rem 0.9rem; border-radius: var(--radius-pill); font-weight: 700; font-size: 0.82rem; display: flex; align-items: center; gap: 6px;">
+        Filtro: "{{ terminoBusqueda }}"
+        <button (click)="limpiarBusqueda()" style="background: none; border: none; color: #0369a1; cursor: pointer; font-weight: 800; padding: 0; margin-left: 4px;">✕</button>
+      </span>
+      <span style="color: var(--text-muted); font-size: 0.88rem; font-weight: 600;">Ordenar por: <strong>Más recientes</strong></span>
+    </div>
   </div>
 
-  <!-- Grilla de Tarjetas -->
-  <div class="cards-grid">
+  <!-- Carga -->
+  <div *ngIf="cargando" style="text-align: center; padding: 4rem 0;">
+    <div style="display: inline-block; width: 40px; height: 40px; border: 4px solid #e2e8f0; border-radius: 50%; border-top-color: var(--primary-blue); animation: spin 1s linear infinite;"></div>
+  </div>
+
+  <!-- Estado Vacío -->
+  <div *ngIf="!cargando && noticiasFiltradas.length === 0" 
+       style="text-align: center; padding: 4rem 2rem; background: white; border-radius: var(--radius-lg); border: 1px dashed var(--border-color); margin: 2rem 0;">
+    <span style="font-size: 2.5rem; display: block; margin-bottom: 1rem;">🔍</span>
+    <h3 style="font-size: 1.4rem; font-weight: 800; color: var(--text-dark);">No encontramos resultados</h3>
+    <p style="color: var(--text-muted); margin: 0.5rem 0 1.5rem;">No hay historias que coincidan con "{{ terminoBusqueda }}".</p>
+    <button class="btn-blue" (click)="limpiarTodo()">Limpiar filtro y ver todas</button>
+  </div>
+
+  <!-- Grilla -->
+  <div class="cards-grid" *ngIf="!cargando && noticiasFiltradas.length > 0">
     <article class="card" *ngFor="let item of noticiasFiltradas">
-      <img [src]="item.imagen" [alt]="item.titulo" style="width: 100%; height: 200px; object-fit: cover;">
+      <img [src]="item.imagen" (error)="onImgError($event)" [alt]="item.titulo" style="width: 100%; height: 200px; object-fit: cover;">
       <div class="card-body">
         <div class="card-meta">
           <span>{{ item.categoria }}</span>
@@ -41,4 +64,15 @@
       </div>
     </article>
   </div>
+
+  <!-- Toast -->
+  <div *ngIf="toastMensaje" 
+       style="position: fixed; bottom: 30px; right: 30px; background: #0f172a; color: white; padding: 1rem 1.5rem; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); font-weight: 700; font-size: 0.9rem; z-index: 1000; animation: fadeIn 0.3s ease;">
+    {{ toastMensaje }}
+  </div>
 </section>
+
+<style>
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+</style>

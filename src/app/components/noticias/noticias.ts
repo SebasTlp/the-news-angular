@@ -11,18 +11,32 @@ import { NoticiasService, Noticia } from '../../services/noticias';
   styleUrl: './noticias.css'
 })
 export class NoticiasComponent implements OnInit {
-  private noticiasService: NoticiasService = inject(NoticiasService);
+  private noticiasService = inject(NoticiasService);
+  
   noticias: Noticia[] = [];
+  cargando: boolean = false; // Inicia en false para evitar bloqueos
   categoriaSeleccionada: string = 'Todas';
+  terminoBusqueda: string = '';
   categorias: string[] = ['Todas', 'Ciudad', 'Innovación', 'Cultura', 'Bienestar', 'Medio Ambiente'];
 
+  toastMensaje: string | null = null;
+
   ngOnInit(): void {
-    this.cargarNoticias();
+    this.cargarDatos();
+    this.noticiasService.busqueda$.subscribe(term => {
+      this.terminoBusqueda = term;
+    });
   }
 
-  cargarNoticias(): void {
-    this.noticiasService.getNoticias().subscribe((data: Noticia[]) => {
-      this.noticias = data;
+  cargarDatos(): void {
+    this.noticiasService.getNoticias().subscribe({
+      next: (data) => {
+        this.noticias = data;
+        this.cargando = false;
+      },
+      error: () => {
+        this.cargando = false;
+      }
     });
   }
 
@@ -30,21 +44,44 @@ export class NoticiasComponent implements OnInit {
     this.categoriaSeleccionada = cat;
   }
 
+  limpiarBusqueda(): void {
+    this.terminoBusqueda = '';
+    this.noticiasService.setTerminoBusqueda('');
+  }
+
+  limpiarTodo(): void {
+    this.categoriaSeleccionada = 'Todas';
+    this.limpiarBusqueda();
+  }
+
   get noticiasFiltradas(): Noticia[] {
-    if (!this.categoriaSeleccionada || this.categoriaSeleccionada === 'Todas') {
-      return this.noticias;
-    }
-    return this.noticias.filter(n => 
-      n.categoria.trim().toLowerCase() === this.categoriaSeleccionada.trim().toLowerCase()
-    );
+    return this.noticias.filter(n => {
+      const coincideCat = (this.categoriaSeleccionada === 'Todas') || 
+                          (n.categoria.trim().toLowerCase() === this.categoriaSeleccionada.trim().toLowerCase());
+      const coincideTexto = !this.terminoBusqueda || 
+                            n.titulo.toLowerCase().includes(this.terminoBusqueda.toLowerCase()) ||
+                            n.resumen.toLowerCase().includes(this.terminoBusqueda.toLowerCase());
+      return coincideCat && coincideTexto;
+    });
   }
 
   toggleFavorito(id: number): void {
     const agregado = this.noticiasService.toggleFavorito(id);
-    alert(agregado ? '¡Noticia agregada a tus Favoritos!' : 'Noticia eliminada de tus Favoritos.');
+    this.mostrarToast(agregado ? '🔖 Noticia agregada a Favoritos' : '🗑️ Noticia eliminada de Favoritos');
+  }
+
+  mostrarToast(mensaje: string): void {
+    this.toastMensaje = mensaje;
+    setTimeout(() => {
+      this.toastMensaje = null;
+    }, 3000);
   }
 
   esFavorito(id: number): boolean {
     return this.noticiasService.esFavorito(id);
+  }
+
+  onImgError(event: any): void {
+    event.target.src = 'https://picsum.photos/id/1015/800/500';
   }
 }

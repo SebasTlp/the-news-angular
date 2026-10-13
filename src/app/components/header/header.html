@@ -1,21 +1,26 @@
-<header>
-  <div class="header-container">
-    <a routerLink="/" class="logo-container">
-      <div class="logo-icon">N</div>
-      <span>The News</span>
+<header style="background: white; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100;">
+  <div style="max-width: 1200px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;">
+    <a routerLink="/" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-dark);">
+      <div style="background: #ef4444; color: white; font-weight: 900; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">N</div>
+      <span style="font-weight: 800; font-size: 1.25rem;">The News</span>
     </a>
-    <nav>
-      <ul>
-        <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Inicio</a></li>
-        <li><a routerLink="/noticias" routerLinkActive="active">Actualidad</a></li>
-        <li><a routerLink="/gestion" routerLinkActive="active">Gestión</a></li>
-        <li><a routerLink="/favoritos" routerLinkActive="active">Favoritos</a></li>
-        <li><a routerLink="/contacto" routerLinkActive="active">Contacto</a></li>
-      </ul>
+
+    <nav style="display: flex; gap: 1.8rem; font-weight: 600; font-size: 0.95rem;">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="text-decoration: none; color: var(--text-dark);">Inicio</a>
+      <a routerLink="/noticias" routerLinkActive="active" style="text-decoration: none; color: var(--text-dark);">Actualidad</a>
+      <a routerLink="/favoritos" routerLinkActive="active" style="text-decoration: none; color: var(--text-dark);">Favoritos</a>
+      <a routerLink="/gestion" routerLinkActive="active" style="text-decoration: none; color: var(--text-dark);">Gestión de Noticias</a>
+      <a routerLink="/contacto" routerLinkActive="active" style="text-decoration: none; color: var(--text-dark);">Contacto</a>
     </nav>
-    <div class="search-wrapper">
-      <span class="search-icon">🔍</span>
-      <input type="text" class="search-input" placeholder="Buscar noticias...">
-    </div>
+
+    <!-- Buscador en tiempo real -->
+    <form (ngSubmit)="onBuscar()" style="position: relative;">
+      <input type="text" 
+             [ngModel]="termino" 
+             (ngModelChange)="onModelChange($event)" 
+             name="busqueda" 
+             placeholder="🔍 Buscar noticias..." 
+             style="padding: 0.55rem 1rem 0.55rem 2.2rem; border-radius: var(--radius-pill); border: 1px solid var(--border-color); background: #f8fafc; outline: none; font-size: 0.88rem; width: 220px;">
+    </form>
   </div>
 </header>
